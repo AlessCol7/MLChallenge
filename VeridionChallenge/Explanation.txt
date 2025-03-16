@@ -5,3 +5,68 @@ When I tried applying an LSTM, I switched to using TF-IDF instead of GloVe. TF-I
 I applied the LSTM on top of the TF-IDF it gave unsatisfying result, foccusing on generalising the data and giving only a couple of insurance labels that I tested in the Trials.ipynb.
 In conclusion, the results presented in the file VeridionChallenge/company_insurance_classification.csv represent the most accurate classification I was able to achieve.
 
+
+
+**Strengths and Weaknesses Analysis**
+
+**Strengths:**
+1. **Simplicity and Efficiency:** The TF-IDF and cosine similarity approach is lightweight and computationally efficient compared to deep learning methods. It requires minimal preprocessing and no training, making it quick to implement and test.
+2. **Interpretability:** The similarity-based approach provides an intuitive way to understand why a company was assigned a particular insurance label. Higher similarity scores indicate stronger textual relevance.
+3. **Scalability for Medium-Sized Datasets:** Since TF-IDF only requires computing a term-document matrix and similarity scores, it scales well for datasets with thousands of companies and labels.
+4. **Decent Initial Accuracy:** The method provides reasonable classification accuracy for well-defined business descriptions that closely match insurance taxonomy labels.
+
+**Weaknesses & Areas for Improvement:**
+1. **Handling Ambiguous or Uncommon Descriptions:** The model struggles with vague, poorly worded, or domain-specific company descriptions that do not clearly align with insurance categories.
+2. **Lack of Context Understanding:** Since TF-IDF is purely statistical, it does not capture contextual meaning like embeddings-based models (e.g., BERT). Companies with similar but differently phrased descriptions might receive inconsistent classifications.
+3. **Scalability Issues with Large Datasets:** Although efficient for moderate datasets, TF-IDF’s computational cost increases with dataset size due to matrix operations.
+4. **Assumption of Closest Match Being Correct:** The method assumes that the highest similarity score corresponds to the correct label, which may not always be true.
+5. **Long Tail Performance:** Less common insurance categories with fewer representative words in their labels may be harder to classify accurately.
+
+---
+
+**Scalability Considerations**
+- **Current Performance on Large Datasets:** TF-IDF scales better than deep learning models but still faces performance challenges as data size grows. A dataset with millions of companies would require optimizations such as sparse matrix representations and approximate nearest neighbors for similarity calculations.
+- **Potential Improvements:** Using dimensionality reduction techniques (e.g., SVD) or switching to embeddings like Word2Vec or BERT could improve scalability and accuracy without significantly increasing computational cost.
+
+---
+
+**Critical Thinking and Self-Assessment**
+
+1. **Where does my solution work great? Where does it struggle?**
+   - Works well when company descriptions contain clear keywords that align with insurance taxonomy labels.
+   - Struggles with ambiguous, incomplete, or jargon-heavy descriptions that do not directly match predefined labels.
+
+2. **Have I tested the long tail?**
+   - The method may perform poorly on rare insurance categories. Testing with edge cases (companies that don’t fit neatly into common labels) is necessary to evaluate true performance.
+
+3. **What do I know I don’t know about the solution?**
+   - The model’s robustness against mislabeled or noisy data is unclear.
+   - The impact of using alternative text representations (e.g., word embeddings) on classification accuracy remains unexplored.
+
+4. **How well can it run on huge amounts of data?**
+   - Computational efficiency remains manageable for datasets up to a few hundred thousand records, but performance may degrade significantly with millions of records.
+   - Optimizations such as approximate similarity search (e.g., FAISS) or incremental TF-IDF computation could help scale better.
+
+5. **What trade-offs did I make between accuracy and computational efficiency?**
+   - Chose TF-IDF over deep learning to prioritize interpretability and speed.
+   - Sacrificed some accuracy by not using context-aware embeddings like BERT.
+
+6. **What did I learn during this project that I didn’t know before?**
+   - TF-IDF can be highly effective for text classification when domain-specific keywords are well-represented.
+   - Similarity-based approaches require careful consideration of label specificity and potential overlap.
+   - The importance of validating results with qualitative analysis rather than relying solely on similarity scores.
+
+7. **What should I learn to be even better at this?**
+   - Explore more advanced NLP techniques, such as transformer-based embeddings (BERT, Sentence-BERT) for improved context understanding.
+   - Investigate semi-supervised learning techniques to improve classification accuracy with minimal labeled data.
+   - Optimize large-scale text similarity computations using efficient nearest-neighbor search techniques.
+
+---
+
+### **Future Work and Enhancements**
+- **Hybrid Approach:** Combining TF-IDF with word embeddings could improve accuracy while maintaining efficiency.
+- **Active Learning:** Incorporating human feedback to refine model performance over time.
+- **Dynamic Taxonomy Updates:** Allowing the taxonomy to evolve as new insurance categories emerge.
+
+
+
